@@ -1,1 +1,76 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Employee Access Checklist</title><link rel="stylesheet" href="style.css"></head><body><header><h1>Employee Access Checklist</h1><p>Onboarding and offboarding workflow — portfolio demonstration</p></header><main><div class="notice">Demo only. This is not connected to Microsoft 365 or real employee accounts. Do not enter real personal data.</div><div class="tabs"><button onclick="show('onboard')">New starter onboarding</button><button onclick="show('offboard')">Leaver offboarding</button></div><section id="onboard"><h2>New starter checklist</h2><input id="name" placeholder="Employee name (demo)"><input id="dept" placeholder="Department"><input id="date" type="date"><div id="onList"></div><button onclick="save('on')">Save progress</button></section><section id="offboard" hidden><h2>Leaver checklist</h2><input id="leaveName" placeholder="Employee name (demo)"><div id="offList"></div><button onclick="save('off')">Save progress</button></section><section><h2>Why these steps matter</h2><p>Secure onboarding gives people only the access they need. Secure offboarding removes access quickly, protects company data and reduces the risk of unused accounts being misused.</p><button onclick="window.print()">Print / save demo checklist</button></section></main><footer>Student portfolio project · Simulated workflow only</footer><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starters and Leavers Access Tracker</title>
+<meta name="description" content="Track Microsoft 365 access for people joining and leaving: tasks with owners and due dates, sign-off, overdue alerts and an exportable audit log.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>Starters and Leavers</h1>
+    <p>Access tracker for small IT teams</p>
+  </div>
+  <label class="initials">
+    <span>Your initials</span>
+    <input id="initials" maxlength="4" autocomplete="off" placeholder="VB">
+  </label>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" aria-label="Cases">
+    <button type="button" id="new-case" class="primary wide">New case</button>
+    <ul id="case-list" class="case-list"></ul>
+    <div id="empty-list" class="empty" hidden>
+      <p>No cases yet. Open a case when someone joins or leaves.</p>
+      <button type="button" id="load-examples" class="link">Load 3 example cases</button>
+    </div>
+    <div class="sidebar-tools">
+      <button type="button" id="export-all" class="link">Export full audit log (CSV)</button>
+      <button type="button" id="backup" class="link">Download backup (JSON)</button>
+      <label class="link file-label">Restore from backup<input type="file" id="restore" accept="application/json"></label>
+    </div>
+  </aside>
+
+  <main id="detail" class="detail" tabindex="-1">
+    <section id="welcome" class="welcome">
+      <h2>Never miss a step when someone joins or leaves</h2>
+      <p>Each case lists what IT and the manager need to do, with due dates worked out from the start date or last day. Sign off each task with your initials and everything goes into an audit log you can export.</p>
+      <p class="note">Data is saved only in this browser. Use test names, not real people. This tracker doesn't connect to Microsoft 365. It records what was done.</p>
+    </section>
+
+    <form id="case-form" class="case-form" hidden novalidate>
+      <h2>New case</h2>
+      <fieldset class="type-choice">
+        <legend>Who is this for?</legend>
+        <label><input type="radio" name="type" value="starter" checked> Someone joining</label>
+        <label><input type="radio" name="type" value="leaver"> Someone leaving</label>
+      </fieldset>
+      <label>Full name<input name="name" required autocomplete="off"></label>
+      <label>Job title or team<input name="role" autocomplete="off"></label>
+      <label>Manager<input name="manager" autocomplete="off"></label>
+      <label><span id="date-label">Start date</span><input name="keyDate" type="date" required></label>
+      <p id="form-error" class="error" role="alert" hidden></p>
+      <div class="buttons">
+        <button type="submit" class="primary">Open case</button>
+        <button type="button" id="cancel-case">Cancel</button>
+      </div>
+    </form>
+
+    <article id="case-view" hidden></article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  Built by <a href="https://macroer16.github.io/victor-cloud-portfolio/">Victor Benson</a>.
+  <a href="https://github.com/macroer16/employee-access-checklist">Source code on GitHub</a>.
+</footer>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
